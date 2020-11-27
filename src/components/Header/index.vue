@@ -7,8 +7,8 @@
         <div class="header-top-left">
           尚品汇欢迎您！
           <span>请</span>
-          <a href="###">登录</a>
-          <a href="###">免费注册</a>
+          <router-link to="/login">登录</router-link>
+          <router-link to="/register">免费注册</router-link>
         </div>
         <!-- 导航栏li -->
         <ul class="header-top-right">
@@ -43,14 +43,14 @@
     <div class="header-bottom">
       <!-- 尚品汇logo -->
       <div>
-        <a href="###">
+        <router-link to="/">
           <img src="./images/logo.png" alt="尚品汇logo" />
-        </a>
+        </router-link>
       </div>
       <!-- 搜索框 -->
       <div class="header-bottom-search">
         <input type="text" />
-        <button>搜索</button>
+        <button @click="search">搜索</button>
       </div>
     </div>
   </div>
@@ -59,6 +59,11 @@
 <script>
 export default {
   name: "Header",
+  methods:{
+    search(){
+      this.$router.push("/search")
+    }
+  }
 };
 </script>
 
