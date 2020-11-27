@@ -18,12 +18,10 @@ export default {
 };
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
 *{
   margin: 0;
   padding: 0;
-}
-.box{
-  background-color: rgb(8, 179, 179);
+  list-style:none;
 }
 </style>
