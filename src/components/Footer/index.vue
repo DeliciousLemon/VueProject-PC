@@ -1,5 +1,5 @@
 <template>
-  <div>这里是脑阔</div>
+  <div v-if="!$route.meta.isFooterShow">这里是脑阔</div>
 </template>
 
 <script>

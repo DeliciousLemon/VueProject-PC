@@ -49,7 +49,7 @@
       </div>
       <!-- 搜索框 -->
       <div class="header-bottom-search">
-        <input type="text" />
+        <input type="text" v-model="searchText" />
         <button @click="search">搜索</button>
       </div>
     </div>
@@ -59,21 +59,36 @@
 <script>
 export default {
   name: "Header",
-  methods:{
-    search(){
-      this.$router.push("/search")
-    }
-  }
+  data() {
+    return {
+      searchText: "",
+    };
+  },
+  methods: {
+    search() {
+/*       this.$router.push(
+        `/search${this.searchText ? "/" + this.searchText : ""}`
+      ); */
+      this.$router.push({
+        name:"search"
+      })
+      if(this.searchText){
+        this.$route.query = {
+          name:'jack'
+        } 
+      }
+    },
+  },
 };
 </script>
 
 <style lang="less" scoped>
 .header-top {
-  min-width:1200px;
+  min-width: 1200px;
   background-color: rgb(234, 234, 234);
 }
-.header-top a:hover{
-  color:rgb(12, 178, 243);
+.header-top a:hover {
+  color: rgb(12, 178, 243);
 }
 .header-top-content {
   width: 1200px;
@@ -81,72 +96,72 @@ export default {
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
-  align-items:center;
+  align-items: center;
 }
 .header-top-left {
   font-size: 14px;
 }
-.header-top-left span{
-  margin-left:10px;
+.header-top-left span {
+  margin-left: 10px;
 }
-.header-top-left a{
-  color:rgb(102, 102, 102);
-  text-decoration:none;
+.header-top-left a {
+  color: rgb(102, 102, 102);
+  text-decoration: none;
 }
-.header-top-left a:nth-of-type(1){
-  padding-right:6px;
-  border-right:1px solid rgb(179, 174, 174);
+.header-top-left a:nth-of-type(1) {
+  padding-right: 6px;
+  border-right: 1px solid rgb(179, 174, 174);
 }
-.header-top-left a:nth-of-type(2){
-  margin-left:6px;
+.header-top-left a:nth-of-type(2) {
+  margin-left: 6px;
 }
-.header-top-right{
-  display:flex;
-  justify-content:space-around;
-  align-items:center;
+.header-top-right {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
   width: 600px;
-  font-size:12px;
+  font-size: 12px;
 }
-.header-top-right li{
+.header-top-right li {
   height: 20px;
   line-height: 20px;
 }
-.header-top-right li:nth-child(n+2){
-  border-left:1px solid rgb(179, 174, 174);
-  padding-left:10px;
+.header-top-right li:nth-child(n + 2) {
+  border-left: 1px solid rgb(179, 174, 174);
+  padding-left: 10px;
 }
 
-.header-top-right a{
-  text-decoration:none;
-  color:rgb(102, 102, 102);
+.header-top-right a {
+  text-decoration: none;
+  color: rgb(102, 102, 102);
 }
-.header-bottom{
+.header-bottom {
   width: 1200px;
   height: 67px;
   margin: 0 auto;
-  display:flex;
-  justify-content:space-between;
+  display: flex;
+  justify-content: space-between;
 }
-.header-bottom-search{
-  align-self:flex-end;
+.header-bottom-search {
+  align-self: flex-end;
 }
-.header-bottom-search input{
+.header-bottom-search input {
   width: 490px;
   height: 32px;
-  border:2px solid rgb(234, 74, 54);
-  box-sizing:border-box;
-  outline:none;
-  font-size:16px;
+  border: 2px solid rgb(234, 74, 54);
+  box-sizing: border-box;
+  outline: none;
+  font-size: 16px;
   padding: 0 4px;
-  float:left;
+  float: left;
 }
-.header-bottom-search button{
+.header-bottom-search button {
   width: 68px;
   height: 32px;
-  border:none;
+  border: none;
   background-color: rgb(234, 74, 54);
-  color:white;
-  outline:none;
-  cursor:pointer;
+  color: white;
+  outline: none;
+  cursor: pointer;
 }
 </style>

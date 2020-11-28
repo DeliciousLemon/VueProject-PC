@@ -9,22 +9,29 @@ import Search from "../views/Search"
 Vue.use(VueRouter)
 
 export default new VueRouter({
-    routes:[
+    routes: [
         {
-            path:"/",
-            component:Home
+            path: "/",
+            component: Home
         },
         {
-            path:"/register",
-            component:Register
+            path: "/register",
+            component: Register,
+            meta: {
+                isFooterShow: true
+            }
         },
         {
-            path:"/login",
-            component:Login
+            path: "/login",
+            component: Login,
+            meta: {
+                isFooterShow: true
+            }
         },
         {
-            path:"/search",
-            component:Search
+            name:"search",
+            path: "/search/:searchText?",
+            component: Search
         },
     ]
 })
