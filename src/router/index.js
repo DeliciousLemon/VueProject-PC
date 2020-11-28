@@ -8,6 +8,24 @@ import Search from "../views/Search"
 
 Vue.use(VueRouter)
 
+//重写push和replace
+const push = VueRouter.prototype.push
+const replace = VueRouter.prototype.replace
+
+VueRouter.prototype.push = function (localtion, ontemplate, onAbort) {
+    if (ontemplate && onAbort) {
+        return push.call(this, localtion, ontemplate, onAbort)
+    }
+    push.call(this, localtion, ontemplate, () => { })
+}
+VueRouter.prototype.replace = function (localtion, ontemplate, onAbort) {
+    if (ontemplate && onAbort) {
+        return replace.call(this, localtion, ontemplate, onAbort)
+    }
+    push.call(this, localtion, ontemplate, () => { })
+}
+
+
 export default new VueRouter({
     routes: [
         {
@@ -29,7 +47,7 @@ export default new VueRouter({
             }
         },
         {
-            name:"search",
+            name: "search",
             path: "/search/:searchText?",
             component: Search
         },

@@ -66,17 +66,18 @@ export default {
   },
   methods: {
     search() {
-/*       this.$router.push(
+      /*       this.$router.push(
         `/search${this.searchText ? "/" + this.searchText : ""}`
       ); */
-      this.$router.push({
-        name:"search"
-      })
-      if(this.searchText){
-        this.$route.query = {
-          name:'jack'
-        } 
+      const localtion = {
+        name: "search",
+      };
+      if (this.searchText) {
+        localtion.params = {
+          searchText: this.searchText,
+        };
       }
+      this.$router.push(localtion)
     },
   },
 };
