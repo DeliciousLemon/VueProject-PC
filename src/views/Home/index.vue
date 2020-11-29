@@ -1,13 +1,18 @@
 <template>
-  <div>Home</div>
+  <div>
+    <HomeNav />
+  </div>
 </template>
 
 <script>
+import HomeNav from "./HomeNav";
 export default {
-  name: 'Home',
-}
+  name: "Home",
+  components: {
+    HomeNav,
+  },
+};
 </script>
 
 <style lang="less" scoped>
-
 </style>

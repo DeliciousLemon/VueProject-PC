@@ -14,18 +14,18 @@ export default {
   name: "Login",
   data() {
     return {
-      phone: "",
-      password: "",
+      phone: "13700000000",
+      password: "111111",
     };
   },
   methods: {
     login() {
       userLogin(this.phone, this.password)
         .then((value) => {
-          console.log(value);
+          console.log(value,"响应");
         })
         .catch((err) => {
-          console.log(err);
+          console.log(err,"响应");
         });
     },
   },

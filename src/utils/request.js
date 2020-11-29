@@ -2,11 +2,13 @@ import axios from "axios"
 import NProgress from "nprogress"
 import "nprogress/nprogress.css";
 const instance = axios.create({
-    baseURL: "http://182.92.128.115/api",
+    baseURL: "/api",
 })
 instance.interceptors.request.use(
-    () => {
+    (req) => {
+        console.log(req)
         NProgress.start()
+        return req
     }
 )
 instance.interceptors.response.use(

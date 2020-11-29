@@ -8,5 +8,13 @@ module.exports = {
                 "@api": path.resolve(__dirname, "src/api"),
             }
         }
+    },
+    devServer: {
+        proxy: {
+            "/api": {
+                target: "http://182.92.128.115",
+                changeOrigin: true
+            }
+        }
     }
 }
