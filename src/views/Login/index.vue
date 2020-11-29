@@ -4,7 +4,7 @@
       type="password"
       v-model="password"
     />
-    <button @click="login">登录</button>
+    <el-button @click="login">登录</el-button>
   </div>
 </template>
 
@@ -22,10 +22,10 @@ export default {
     login() {
       userLogin(this.phone, this.password)
         .then((value) => {
-          console.log(value,"响应");
+          console.log(value, "响应");
         })
         .catch((err) => {
-          console.log(err,"响应");
+          console.log(err, "响应");
         });
     },
   },

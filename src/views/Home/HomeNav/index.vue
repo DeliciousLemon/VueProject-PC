@@ -101,11 +101,15 @@ export default {
   margin: 0 auto;
   position: relative;
 }
-.bottom .bottom-left {
-  width: 210px;
+.bottom-left {
+  width: 190px;
   line-height: 30px;
   font-size: 14px;
   background-color: rgb(250, 250, 250);
+  padding-left: 20px;
+}
+.bottom-left a:hover {
+  text-decoration: underline;
 }
 .bottom .bottom-left-item > a {
   text-decoration: none;

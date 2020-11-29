@@ -1,25 +1,32 @@
 import axios from "axios"
 import NProgress from "nprogress"
+import { Message } from "element-ui"
 import "nprogress/nprogress.css";
+
 const instance = axios.create({
     baseURL: "/api",
 })
 instance.interceptors.request.use(
     (req) => {
-        console.log(req)
         NProgress.start()
         return req
     }
 )
 instance.interceptors.response.use(
     res => {
+        console.log(res)
+        if(res.data.code === 200){
+            NProgress.done()
+            return res.data.data
+        }
         NProgress.done()
-        console.log(res, "响应拦截器------------------")
-        return res.data.data
+        Message.error(res.data.message)
+        return Promise.reject(res.data.message)
     },
     err => {
         NProgress.done()
-        console.log(err, "响应拦截器------------------")
+        const message = err.message || "网络出现问题"
+        Message.error(message)
         return Promise.reject(err)
     }
 )
