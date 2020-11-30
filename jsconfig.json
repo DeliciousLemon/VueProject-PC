@@ -11,6 +11,9 @@
             "@api/*": [
                 "./src/api/*"
             ],
+            "@components/*": [
+                "./src/components/*"
+            ],
         }
     },
     "exclude": [

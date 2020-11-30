@@ -1,15 +1,15 @@
 <template>
   <div>
-    <HomeNav />
+    <Nav />
   </div>
 </template>
 
 <script>
-import HomeNav from "./HomeNav";
+import Nav from "@components/Nav";
 export default {
   name: "Home",
   components: {
-    HomeNav,
+    Nav,
   },
 };
 </script>
