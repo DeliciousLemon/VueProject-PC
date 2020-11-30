@@ -104,6 +104,7 @@ export default {
 <style lang="less" scoped>
 .top {
   height: 45px;
+  min-width: 1200px;
   border-bottom: 2px solid red;
 }
 .top-content {
@@ -132,7 +133,6 @@ export default {
   margin: 0 auto;
   position: relative;
   display: flex;
-  border: 1px solid red;
 }
 .bottom-left {
   width: 180px;
@@ -152,6 +152,7 @@ export default {
 }
 .bottom-left-item:hover .bottom-left-child {
   display: block;
+  z-index:3;
 }
 .bottom-left-child {
   display: none;
