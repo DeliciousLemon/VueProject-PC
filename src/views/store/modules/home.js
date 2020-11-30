@@ -1,18 +1,26 @@
-import { reqHome } from "@api/home";
+import { reqHome,reqBanner} from "@api/home";
 export default {
     state: {
-        categorys: []
+        categorys: [],
+        banners: []
     },
     getters: {},
     actions: {
-        async getCategorys({commit}) {
+        async getCategorys({ commit }) {
             const categoryLists = await reqHome()
-            commit("WRITECATEGORY",categoryLists)
+            commit("WRITECATEGORY", categoryLists)
+        },
+        async getBanners({ commit }) {
+            const banners = await reqBanner()
+            commit("WRITE_BANNER", banners)
         }
     },
     mutations: {
-        WRITECATEGORY(state,categoryLists){
+        WRITECATEGORY(state, categoryLists) {
             state.categorys = categoryLists
+        },
+        WRITE_BANNER(state, banners) {
+            state.banners = banners
         }
     }
 }

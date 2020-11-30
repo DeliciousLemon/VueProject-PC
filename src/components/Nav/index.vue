@@ -132,7 +132,7 @@ export default {
   margin: 0 auto;
   position: relative;
   display: flex;
-  border:1px solid red;
+  border: 1px solid red;
 }
 .bottom-left {
   width: 180px;
