@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!-- 上部分 -->
     <div class="top">
       <div class="top-content">
         <div>全部商品分类</div>
@@ -15,7 +16,9 @@
         </ul>
       </div>
     </div>
+    <!-- 下部分 -->
     <div class="bottom">
+      <!-- 左边分类 -->
       <div class="bottom-left">
         <!-- 一级 -->
         <ul v-for="category in categorys" :key="category.categoryId">
@@ -42,30 +45,36 @@
           </div>
         </ul>
       </div>
-      <div class="bottom-center"></div>
+      <!-- 中间轮播图 -->
+      <div class="bottom-center">
+        <div class="block">
+          <el-carousel trigger="click" height="150px">
+            <el-carousel-item v-for="item in 4" :key="item">
+              <h3 class="small"></h3>
+            </el-carousel-item>
+          </el-carousel>
+        </div>
+      </div>
+      <!-- 右边信息栏 -->
       <div class="bottom-right"></div>
     </div>
   </div>
 </template>
 
 <script>
-import { reqHome } from "@api/home";
+import { mapState, mapActions } from "vuex";
 export default {
   name: "HomeNav",
-  data() {
-    return {
-      categorys: [],
-    };
+  computed: {
+    ...mapState({
+      categorys: (state) => state.home.categorys,
+    }),
+  },
+  methods: {
+    ...mapActions(["getCategorys"]),
   },
   mounted() {
-    reqHome()
-      .then((val) => {
-        console.log(val);
-        this.categorys = val;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    this.getCategorys();
   },
 };
 </script>
@@ -100,6 +109,7 @@ export default {
   width: 1200px;
   margin: 0 auto;
   position: relative;
+  display: flex;
 }
 .bottom-left {
   width: 190px;
@@ -111,7 +121,7 @@ export default {
 .bottom-left a:hover {
   text-decoration: underline;
 }
-.bottom .bottom-left-item > a {
+.bottom-left-item > a {
   text-decoration: none;
   color: #333;
 }
@@ -127,11 +137,12 @@ export default {
   left: 210px;
   width: 736px;
   height: 510px;
-  line-height: 40px;
+  line-height: 20px;
 }
 .bottom-left-child li {
   display: flex;
   align-items: flex-start;
+  margin-top: 6px;
 }
 .bottom-left-child li > a {
   display: inline-block;
@@ -139,6 +150,7 @@ export default {
   text-align: center;
   text-decoration: none;
   color: #333;
+  margin-top: 10px;
 }
 .bottom-left-grandson {
   display: inline-block;
@@ -147,9 +159,9 @@ export default {
 .bottom-left-grandson span {
   display: inline-block;
   padding: 0 10px;
-  height: 20px;
-  line-height: 20px;
   border-left: 1px solid rgb(204, 204, 204);
+  height: 20px;
+  margin-top: 10px;
 }
 .bottom-left-grandson span > a {
   text-decoration: none;
