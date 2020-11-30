@@ -9,25 +9,17 @@
 </template>
 
 <script>
-import { userLogin } from "@api/login.js";
+import { mapActions, mapState } from "vuex";
 export default {
   name: "Login",
-  data() {
-    return {
-      phone: "13700000000",
-      password: "111111",
-    };
+  computed: {
+    ...mapState({
+      phone: (state) => state.login.phone,
+      password: (state) => state.login.password,
+    }),
   },
   methods: {
-    login() {
-      userLogin(this.phone, this.password)
-        .then((value) => {
-          console.log(value, "响应");
-        })
-        .catch((err) => {
-          console.log(err, "响应");
-        });
-    },
+    ...mapActions(["login"]),
   },
 };
 </script>

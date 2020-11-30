@@ -19,25 +19,40 @@
     <!-- 下部分 -->
     <div class="bottom">
       <!-- 左边分类 -->
-      <div class="bottom-left">
+      <div class="bottom-left" @click="goSearch">
         <!-- 一级 -->
         <ul v-for="category in categorys" :key="category.categoryId">
           <div class="bottom-left-item">
-            <a href="###">{{ category.categoryName }}</a>
+            <a
+              :data-categoryName="category.categoryName"
+              :data-categoryType="1"
+              :data-categoryId="category.categoryId"
+              >{{ category.categoryName }}</a
+            >
             <!-- 二级 -->
             <div class="bottom-left-child">
               <li
                 v-for="child in category.categoryChild"
                 :key="child.categoryId"
               >
-                <a href="###">{{ child.categoryName }}</a>
+                <a
+                  :data-categoryName="child.categoryName"
+                  :data-categoryType="2"
+                  :data-categoryId="child.categoryId"
+                  >{{ child.categoryName }}</a
+                >
                 <!-- 三级 -->
                 <div class="bottom-left-grandson">
                   <span
                     v-for="grandson in child.categoryChild"
                     :key="grandson.categoryId"
                   >
-                    <a href="###">{{ grandson.categoryName }}</a>
+                    <a
+                      :data-categoryName="grandson.categoryName"
+                      :data-categoryType="3"
+                      :data-categoryId="grandson.categoryId"
+                      >{{ grandson.categoryName }}</a
+                    >
                   </span>
                 </div>
               </li>
@@ -47,13 +62,13 @@
       </div>
       <!-- 中间轮播图 -->
       <div class="bottom-center">
-        <div class="block">
+<!--         <div class="block">
           <el-carousel trigger="click" height="150px">
             <el-carousel-item v-for="item in 4" :key="item">
               <h3 class="small"></h3>
             </el-carousel-item>
           </el-carousel>
-        </div>
+        </div> -->
       </div>
       <!-- 右边信息栏 -->
       <div class="bottom-right"></div>
@@ -72,6 +87,16 @@ export default {
   },
   methods: {
     ...mapActions(["getCategorys"]),
+    goSearch(e) {
+      this.$router.push({
+        name: "search",
+        query: {
+          categoryName: e.target.dataset.categoryname,
+          [`category${e.target.dataset.categorytype}Id`]: e.target.dataset
+            .categoryid,
+        },
+      });
+    },
   },
   mounted() {
     this.getCategorys();
