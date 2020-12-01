@@ -1,0 +1,9 @@
+[{
+    "id|+1": 1,
+    "name": "@ctitle(3,5)",
+    "keywords|6": ["@ctitle(3,5)"],
+    "navList|6": [{
+        "url": "#",
+        "text": "@ctitle(2,4)"
+    }]
+}]

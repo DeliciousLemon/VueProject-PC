@@ -147,6 +147,7 @@ export default {
   margin-top: 6px;
   margin-left: 220px;
   font-size: 0;
+  height: 500px;
 }
 .photoBox {
   width: 730px;

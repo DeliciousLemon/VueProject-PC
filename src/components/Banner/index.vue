@@ -40,7 +40,7 @@ export default {
         this.swiper = new Swiper(this.$refs.swiper, {
           loop: true, // 循环模式选项
           autoplay: {
-            delay: 2000,
+            delay: 5000,
             disableOnInteraction: false,
           },
           // 如果需要分页器

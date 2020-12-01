@@ -1,66 +1,49 @@
 <template>
-  <div class="floor">
-    <!-- 顶部分类 -->
-    <div class="title">
-      <h3 class="nav-title">家用电器</h3>
-      <ul class="nav-tabs">
-        <li class="active">
-          <a href="#tab1" data-toggle="tab">热门</a>
-        </li>
-        <li>
-          <a href="#tab2" data-toggle="tab">大家电</a>
-        </li>
-        <li>
-          <a href="#tab3" data-toggle="tab">生活电器</a>
-        </li>
-        <li>
-          <a href="#tab4" data-toggle="tab">厨房电器</a>
-        </li>
-        <li>
-          <a href="#tab5" data-toggle="tab">应季电器</a>
-        </li>
-        <li>
-          <a href="#tab6" data-toggle="tab">空气/净水</a>
-        </li>
-        <li>
-          <a href="#tab7" data-toggle="tab">高端电器</a>
-        </li>
-      </ul>
-    </div>
-    <!-- 推荐内容 -->
-    <div class="tab-content">
-      <!-- 左边推荐 -->
-      <div class="blockgary">
-        <ul class="jd-list">
-          <li>节能补贴</li>
-          <li>4K电视</li>
-          <li>空气净化器</li>
-          <li>IH电饭煲</li>
-          <li>滚筒洗衣机</li>
-          <li>电热水器</li>
+  <div>
+    <div
+      class="floor"
+      v-for="(floorCont, index) in floorConts"
+      :Key="index"
+    >
+      <!-- 顶部分类 -->
+      <div class="title">
+        <h3 class="nav-title">{{floorCont.name}}</h3>
+        <ul class="nav-tabs">
+          <li class="active" v-for="(keyword,index) in floorCont.keywords" :key="index">
+            <a href="#tab1" data-toggle="tab">{{ keyword }}</a>
+          </li>
         </ul>
-        <img src="./images/floor-1-1.png" />
       </div>
-      <!-- 轮播图 -->
-      <Banner :bannerList="floorBanners" />
-      <!-- 右边推荐 -->
-      <div class="split">
-        <div class="floor-conver-pit">
-          <img src="./images/floor-1-2.png" />
+      <!-- 推荐内容 -->
+      <div class="tab-content">
+        <!-- 左边推荐 -->
+        <div class="blockgary">
+          <ul class="jd-list">
+            <li v-for="(nav,index) in floorCont.navList" :key="index">{{nav.text}}</li>
+          </ul>
+          <img src="./images/floor-1-1.png" />
         </div>
-        <div class="floor-conver-pit">
-          <img src="./images/floor-1-3.png" />
+        <!-- 轮播图 -->
+        <Banner :bannerList="floorBanners" />
+        <!-- 右边推荐 -->
+        <div class="split">
+          <div class="floor-conver-pit">
+            <img src="./images/floor-1-2.png" />
+          </div>
+          <div class="floor-conver-pit">
+            <img src="./images/floor-1-3.png" />
+          </div>
         </div>
-      </div>
-      <div class="split-center">
-        <img src="./images/floor-1-4.png" />
-      </div>
-      <div class="split">
-        <div class="floor-conver-pit">
-          <img src="./images/floor-1-5.png" />
+        <div class="split-center">
+          <img src="./images/floor-1-4.png" />
         </div>
-        <div class="floor-conver-pit">
-          <img src="./images/floor-1-6.png" />
+        <div class="split">
+          <div class="floor-conver-pit">
+            <img src="./images/floor-1-5.png" />
+          </div>
+          <div class="floor-conver-pit">
+            <img src="./images/floor-1-6.png" />
+          </div>
         </div>
       </div>
     </div>
@@ -78,13 +61,15 @@ export default {
   computed: {
     ...mapState({
       floorBanners: (state) => state.home.floorBanners,
+      floorConts: (state) => state.home.floorConts,
     }),
   },
   methods: {
-    ...mapActions(["getFloorBanners"]),
+    ...mapActions(["getFloorBanners", "getFloorCont"]),
   },
   mounted() {
     this.getFloorBanners();
+    this.getFloorCont();
   },
 };
 </script>

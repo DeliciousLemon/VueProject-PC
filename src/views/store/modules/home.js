@@ -1,9 +1,10 @@
-import { reqHome, reqBanner, reqFloorBanner } from "@api/home";
+import { reqHome, reqBanner, reqFloorBanner, reqFloorCont } from "@api/home";
 export default {
     state: {
         categorys: [],
         banners: [],
-        floorBanners: []
+        floorBanners: [],
+        floorConts: []
     },
     getters: {},
     actions: {
@@ -19,6 +20,10 @@ export default {
             const floorBanners = await reqFloorBanner()
             commit("WRITE_FLOOR_BANNER", floorBanners)
         },
+        async getFloorCont({ commit }) {
+            const floorConts = await reqFloorCont()
+            commit("WRITE_FLOOR_CONT", floorConts)
+        },
     },
     mutations: {
         WRITECATEGORY(state, categoryLists) {
@@ -30,5 +35,10 @@ export default {
         WRITE_FLOOR_BANNER(state, floorBanners) {
             state.floorBanners = floorBanners
         },
-    }
+        WRITE_FLOOR_CONT(state, floorConts) {
+            state.floorConts = floorConts
+        },
+    },
+
+
 }
