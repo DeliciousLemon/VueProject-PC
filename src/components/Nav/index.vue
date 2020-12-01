@@ -133,6 +133,7 @@ export default {
   margin: 0 auto;
   position: relative;
   display: flex;
+  z-index: 3;
 }
 .bottom-left {
   width: 180px;
