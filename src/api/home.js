@@ -13,3 +13,9 @@ export const reqBanner = function () {
         url: "/banner"
     })
 }
+export const reqFloorBanner = function () {
+    return requestMock({
+        method: "GET",
+        url: "/floor"
+    })
+}

@@ -1,13 +1,6 @@
 <template>
   <div class="box">
-    <!-- 轮播图 -->
-    <div class="block">
-      <el-carousel class="photoBox" trigger="click" height="510px">
-        <el-carousel-item v-for="item in banners" :key="item.id">
-          <img :src="item.imgUrl" alt="" class="small" />
-        </el-carousel-item>
-      </el-carousel>
-    </div>
+    <Banner :bannerList="banners" />
     <!-- 右侧信息 -->
     <div class="right">
       <div>
@@ -123,18 +116,22 @@
 
 <script>
 import { mapState, mapActions } from "vuex";
+import Banner from "@components/Banner";
 export default {
-  name: "Banner",
+  name: "BannerSwiper",
   computed: {
     ...mapState({
       banners: (state) => state.home.banners,
     }),
   },
+  components: {
+    Banner,
+  },
   methods: {
     ...mapActions(["getBanners"]),
   },
-  mounted() {
-    this.getBanners();
+  async mounted() {
+    await this.getBanners();
   },
 };
 </script>
@@ -146,9 +143,10 @@ export default {
   display: flex;
   justify-content: flex-end;
 }
-.block {
+.swiper-container {
   margin-top: 6px;
-  margin-left: 210px;
+  margin-left: 220px;
+  font-size: 0;
 }
 .photoBox {
   width: 730px;
@@ -211,23 +209,23 @@ export default {
   height: 78px;
   border-left: 1px solid #666;
   border-bottom: 1px solid #666;
-  text-align:center;
-  font-size:12px;
+  text-align: center;
+  font-size: 12px;
 }
-.quick li span:nth-child(1){
-  display:block;
+.quick li span:nth-child(1) {
+  display: block;
   margin: 10px auto;
   width: 30px;
   height: 30px;
-  border:1px solid red;
+  border: 1px solid red;
 }
 
 .right img {
   width: 244px;
 }
-.block .el-carousel__container .el-carousel__arrow{
+.block .el-carousel__container .el-carousel__arrow {
   background-color: rgb(243, 9, 9);
   color: rgb(243, 9, 9);
-  border-radius:0;
+  border-radius: 0;
 }
 </style>

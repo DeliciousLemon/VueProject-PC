@@ -14,7 +14,6 @@ instance.interceptors.request.use(
 )
 instance.interceptors.response.use(
     res => {
-        console.log(res.data,"请求拦截器")
         if(res.data.code === 200){
             NProgress.done()
             return res.data.data

@@ -14,7 +14,6 @@ instance.interceptors.request.use(
 )
 instance.interceptors.response.use(
     res => {
-        console.log(res)
         if(res.data.code === 200){
             NProgress.done()
             return res.data.data
