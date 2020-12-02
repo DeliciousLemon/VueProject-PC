@@ -17,11 +17,22 @@
             <li class="with-x" v-if="searchText.categoryName">
               {{ searchText.categoryName }}<i @click="delCategoryName">×</i>
             </li>
+            <li class="with-x" v-if="searchText.trademark">
+              品牌：{{ searchText.trademark.split(":")[1]
+              }}<i @click="delTrademark">×</i>
+            </li>
+            <li class="with-x" v-for="(attr,index) in searchText.props" :key="attr.attrId">
+              {{attr.split(":")[2]}}:{{attr.split(":")[1]}}
+              <i @click="delAttr(index)">×</i>
+            </li>
           </ul>
         </div>
 
         <!--可选择的分类-->
-        <SearchSelector />
+        <SearchSelector
+          :addTrademarkChecked="addTrademarkChecked"
+          :addAttrsChecked="addAttrsChecked"
+        />
 
         <!--搜索结果导航栏-->
         <div class="details clearfix">
@@ -155,22 +166,45 @@ export default {
         category3Id,
         keyword: searchText,
       };
+      console.log(this.searchText);
       this.getSearch(this.searchText);
     },
+    //删除搜索关键字
     delKeyword() {
       this.searchText.keyword = "";
-      this.$bus.$emit("clearKeyword")
+      this.$bus.$emit("clearKeyword");
       this.$router.replace({
         name: "search",
         query: this.$route.query,
       });
     },
+    //删除分类选择
     delCategoryName() {
       (this.searchText.delCategoryName = ""),
         this.$router.replace({
           name: "search",
           params: this.$route.params,
         });
+    },
+    //删除品牌选择
+    delTrademark() {
+      this.searchText.trademark = "";
+      this.updateSearch();
+    },
+    //删除属性选择
+    delAttr(index){
+      this.searchText.props.splice(index,1);
+      this.updateSearch()
+    },
+    //添加品牌选择
+    addTrademarkChecked(trademark) {
+      this.searchText.trademark = trademark;
+      this.updateSearch();
+    },
+    //添加属性选择
+    addAttrsChecked(attr) {
+      this.searchText.props = attr;
+      this.updateSearch();
     },
   },
   mounted() {

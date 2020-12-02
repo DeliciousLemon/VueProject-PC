@@ -5,7 +5,11 @@
       <div class="value logos">
         <!-- 品牌选择 -->
         <ul class="logo-list">
-          <li v-for="trademark in trademarkList" :key="trademark.tmId">
+          <li
+            v-for="trademark in trademarkList"
+            :key="trademark.tmId"
+            @click="trademarkChecked(`${trademark.tmId}:${trademark.tmName}`)"
+          >
             {{ trademark.tmName }}
           </li>
         </ul>
@@ -22,7 +26,7 @@
       <div class="fl value">
         <ul class="type-list">
           <li v-for="(attr, index) in attrs.attrValueList" :key="index">
-            <a>{{ attr }}</a>
+            <a @click="attrChecked(`${attrs.attrId}:${attr}:${attrs.attrName}`)">{{ attr }}</a>
           </li>
         </ul>
       </div>
@@ -36,8 +40,26 @@
 import { mapGetters } from "vuex";
 export default {
   name: "SearchSelector",
+  data() {
+    return {
+      attrs: [],
+    };
+  },
   computed: {
     ...mapGetters(["trademarkList", "attrsList"]),
+  },
+  props: {
+    addTrademarkChecked: Function,
+    addAttrsChecked: Function,
+  },
+  methods: {
+    trademarkChecked(trademark) {
+      this.addTrademarkChecked(trademark);
+    },
+    attrChecked(attr) {
+      this.attrs.push(attr);
+      this.addAttrsChecked(this.attrs)
+    },
   },
 };
 </script>
