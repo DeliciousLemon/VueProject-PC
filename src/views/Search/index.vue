@@ -276,7 +276,7 @@ export default {
     },
     //分页器函数
     handleSizeChange(pageSize) {
-      console.log(pageSize)
+      console.log(pageSize);
       this.searchText.pageSize = pageSize;
       this.updateSearch();
     },
