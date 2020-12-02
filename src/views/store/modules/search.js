@@ -24,7 +24,6 @@ export default {
     actions: {
         async getSearch({ commit }, data={}) {
             const searchResult = await reqSearch(data)
-            console.log(searchResult)
             commit("WRITE_SEARCHRESULTS", searchResult)
         }
     },

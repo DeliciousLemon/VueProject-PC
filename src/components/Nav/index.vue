@@ -141,6 +141,7 @@ export default {
   background-color: rgb(250, 250, 250);
   padding-left: 30px;
   text-align: left;
+  z-index: 3;
 }
 .bottom-left a:hover {
   text-decoration: underline;
