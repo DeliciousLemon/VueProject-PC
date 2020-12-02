@@ -21,8 +21,12 @@
               品牌：{{ searchText.trademark.split(":")[1]
               }}<i @click="delTrademark">×</i>
             </li>
-            <li class="with-x" v-for="(attr,index) in searchText.props" :key="attr.attrId">
-              {{attr.split(":")[2]}}:{{attr.split(":")[1]}}
+            <li
+              class="with-x"
+              v-for="(attr, index) in searchText.props"
+              :key="attr.attrId"
+            >
+              {{ attr.split(":")[2] }}:{{ attr.split(":")[1] }}
               <i @click="delAttr(index)">×</i>
             </li>
           </ul>
@@ -39,23 +43,47 @@
           <div class="sui-navbar">
             <div class="navbar-inner filter">
               <ul class="sui-nav">
-                <li class="active">
-                  <a href="#">综合</a>
+                <li
+                  :class="{ active: searchText.order.indexOf('1') > -1 }"
+                  @click="allChecked"
+                >
+                  <a
+                    >综合
+                    <i
+                      class="iconfont icon-jiantoushangsheng"
+                      v-show="!isAllAgain"
+                    ></i>
+                    <i
+                      class="iconfont icon-jiantouxiajiang"
+                      v-show="isAllAgain"
+                    ></i>
+                  </a>
                 </li>
                 <li>
-                  <a href="#">销量</a>
+                  <a>销量</a>
                 </li>
                 <li>
-                  <a href="#">新品</a>
+                  <a>新品</a>
                 </li>
                 <li>
-                  <a href="#">评价</a>
+                  <a>评价</a>
+                  <i></i>
                 </li>
-                <li>
-                  <a href="#">价格⬆</a>
-                </li>
-                <li>
-                  <a href="#">价格⬇</a>
+                <li
+                  :class="{ active: searchText.order.indexOf('2') > -1 }"
+                  @click="priceChecked()"
+                >
+                  <a
+                    >价格
+                    <i
+                      class="iconfont icon-jiantoushangsheng"
+                      v-show="!isPriceAgain"
+                    ></i>
+                    <i
+                      class="iconfont icon-jiantouxiajiang"
+                      v-show="isPriceAgain"
+                    ></i>
+                  </a>
                 </li>
               </ul>
             </div>
@@ -128,12 +156,14 @@ export default {
         category3Id: "",
         categoryName: "",
         keyword: "",
-        order: "",
+        order: "1:desc",
         pageNo: 1,
         pageSize: 30,
         props: [],
         trademark: "",
       },
+      isPriceAgain: false,
+      isAllAgain: false,
     };
   },
   computed: {
@@ -191,9 +221,9 @@ export default {
       this.updateSearch();
     },
     //删除属性选择
-    delAttr(index){
-      this.searchText.props.splice(index,1);
-      this.updateSearch()
+    delAttr(index) {
+      this.searchText.props.splice(index, 1);
+      this.updateSearch();
     },
     //添加品牌选择
     addTrademarkChecked(trademark) {
@@ -203,6 +233,33 @@ export default {
     //添加属性选择
     addAttrsChecked(attr) {
       this.searchText.props = attr;
+      this.updateSearch();
+    },
+    //综合排序
+    allChecked() {
+      let [orderNum, orderType] = this.searchText.order.split(":");
+      if (orderNum === "1") {
+        this.isAllAgain = !this.isAllAgain;
+        orderType = this.isAllAgain ? "desc" : "asc";
+      } else {
+        orderNum = 1;
+      }
+      this.searchText.order = `${orderNum}:${orderType}`;
+      this.updateSearch();
+    },
+    //价格排序
+    priceChecked() {
+      let [orderNum, orderType] = this.searchText.order.split(":");
+      //判断是不是第二次点击
+      if (orderNum === "2") {
+        this.isPriceAgain = !this.isPriceAgain;
+        orderType = this.isPriceAgain ? "desc" : "asc";
+      } else {
+        orderType = "asc";
+        this.isPriceAgain = false;
+        orderNum = 2;
+      }
+      this.searchText.order = `${orderNum}:${orderType}`;
       this.updateSearch();
     },
   },
