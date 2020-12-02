@@ -77,7 +77,10 @@ export default {
           searchText: this.searchText,
         };
       }
-      this.$router.push(localtion);
+      this.$route.name === "search"?
+      this.$router.replace(localtion):
+      this.$router.push(localtion)
+      ;
     },
   },
   mounted() {

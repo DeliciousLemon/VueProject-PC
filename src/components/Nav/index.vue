@@ -85,14 +85,17 @@ export default {
     ...mapActions(["getCategorys"]),
     goSearch(e) {
       if (!e.target.dataset.categoryname) return;
-      this.$router.push({
+      const localtion = {
         name: "search",
         query: {
           categoryName: e.target.dataset.categoryname,
           [`category${e.target.dataset.categorytype}Id`]: e.target.dataset
             .categoryid,
         },
-      });
+      };
+      this.$route.name === "search"
+        ? this.$router.replace(localtion)
+        : this.$router.push(localtion);
     },
   },
   mounted() {

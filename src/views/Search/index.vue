@@ -166,7 +166,6 @@ export default {
         category3Id,
         keyword: searchText,
       };
-      console.log(this.searchText);
       this.getSearch(this.searchText);
     },
     //删除搜索关键字

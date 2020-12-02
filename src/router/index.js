@@ -22,7 +22,7 @@ VueRouter.prototype.replace = function (localtion, ontemplate, onAbort) {
     if (ontemplate && onAbort) {
         return replace.call(this, localtion, ontemplate, onAbort)
     }
-    push.call(this, localtion, ontemplate, () => { })
+    replace.call(this, localtion, ontemplate, () => { })
 }
 
 
