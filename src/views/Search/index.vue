@@ -38,8 +38,8 @@
           :addAttrsChecked="addAttrsChecked"
         />
 
-        <!--搜索结果导航栏-->
         <div class="details clearfix">
+          <!--搜索结果导航栏-->
           <div class="sui-navbar">
             <div class="navbar-inner filter">
               <ul class="sui-nav">
@@ -135,7 +135,18 @@
               </li>
             </ul>
           </div>
-          <div><span>共10页&nbsp;</span></div>
+          <el-pagination
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+            :current-page="searchText.pageNo"
+            :pager-count="7"
+            :page-sizes="[5, 10, 15, 20]"
+            :page-size="5"
+            background
+            layout=" prev, pager, next,total, sizes, jumper"
+            :total="total"
+          >
+          </el-pagination>
         </div>
       </div>
     </div>
@@ -158,7 +169,7 @@ export default {
         keyword: "",
         order: "1:desc",
         pageNo: 1,
-        pageSize: 30,
+        pageSize: 5,
         props: [],
         trademark: "",
       },
@@ -167,7 +178,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["goodsList"]),
+    ...mapGetters(["goodsList", "total"]),
   },
   components: {
     SearchSelector,
@@ -180,7 +191,7 @@ export default {
   },
   methods: {
     ...mapActions(["getSearch"]),
-    updateSearch() {
+    updateSearch(pageNo = 1) {
       const {
         category1Id,
         category2Id,
@@ -195,6 +206,7 @@ export default {
         category2Id,
         category3Id,
         keyword: searchText,
+        pageNo,
       };
       this.getSearch(this.searchText);
     },
@@ -261,6 +273,15 @@ export default {
       }
       this.searchText.order = `${orderNum}:${orderType}`;
       this.updateSearch();
+    },
+    //分页器函数
+    handleSizeChange(pageSize) {
+      console.log(pageSize)
+      this.searchText.pageSize = pageSize;
+      this.updateSearch();
+    },
+    handleCurrentChange(currentPage) {
+      this.updateSearch(currentPage);
     },
   },
   mounted() {

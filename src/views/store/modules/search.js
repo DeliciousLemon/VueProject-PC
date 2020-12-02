@@ -20,6 +20,9 @@ export default {
         goodsList(state) {
             return state.searchResult.goodsList
         },
+        total(state) {
+            return state.searchResult.total
+        },
     },
     actions: {
         async getSearch({ commit }, data={}) {
