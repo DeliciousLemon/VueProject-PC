@@ -11,10 +11,12 @@
             </li>
           </ul>
           <ul class="fl sui-tag">
-            <li class="with-x">手机</li>
-            <li class="with-x">iphone<i>×</i></li>
-            <li class="with-x">华为<i>×</i></li>
-            <li class="with-x">OPPO<i>×</i></li>
+            <li class="with-x" v-if="searchText.keyword">
+              {{ searchText.keyword }}<i @click="delKeyword">×</i>
+            </li>
+            <li class="with-x" v-if="searchText.categoryName">
+              {{ searchText.categoryName }}<i @click="delCategoryName">×</i>
+            </li>
           </ul>
         </div>
 
@@ -142,15 +144,33 @@ export default {
         category1Id,
         category2Id,
         category3Id,
+        categoryName,
       } = this.$route.query;
       const { searchText } = this.$route.params;
-      this.getSearch({
+      this.searchText = {
         ...this.searchText,
+        categoryName,
         category1Id,
         category2Id,
         category3Id,
         keyword: searchText,
+      };
+      this.getSearch(this.searchText);
+    },
+    delKeyword() {
+      this.searchText.keyword = "";
+      this.$bus.$emit("clearKeyword")
+      this.$router.replace({
+        name: "search",
+        query: this.$route.query,
       });
+    },
+    delCategoryName() {
+      (this.searchText.delCategoryName = ""),
+        this.$router.replace({
+          name: "search",
+          params: this.$route.params,
+        });
     },
   },
   mounted() {

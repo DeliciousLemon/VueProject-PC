@@ -77,8 +77,13 @@ export default {
           searchText: this.searchText,
         };
       }
-      this.$router.push(localtion)
+      this.$router.push(localtion);
     },
+  },
+  mounted() {
+    this.$bus.$on("clearKeyword", () => {
+      this.searchText = "";
+    });
   },
 };
 </script>
