@@ -4,11 +4,16 @@
     <div class="header-top">
       <div class="header-top-content">
         <!-- 注册登录 -->
-        <div class="header-top-left">
+        <div class="header-top-left" v-if="!userName">
           尚品汇欢迎您！
           <span>请</span>
           <router-link to="/login">登录</router-link>
           <router-link to="/register">免费注册</router-link>
+        </div>
+        <div class="logged" v-else>
+          尚品汇欢迎您！
+          <span>{{ userName }}</span>
+          <a href="###" @click="outlogin">退出登录</a>
         </div>
         <!-- 导航栏li -->
         <ul class="header-top-right">
@@ -57,6 +62,7 @@
 </template>
 
 <script>
+import { mapState, mapMutations } from "vuex";
 export default {
   name: "Header",
   data() {
@@ -64,7 +70,13 @@ export default {
       searchText: "",
     };
   },
+  computed: {
+    ...mapState({
+      userName: (state) => state.login.userName,
+    }),
+  },
   methods: {
+    ...mapMutations(["OUT_LOGIN"]),
     search() {
       /*       this.$router.push(
         `/search${this.searchText ? "/" + this.searchText : ""}`
@@ -77,10 +89,20 @@ export default {
           searchText: this.searchText,
         };
       }
-      this.$route.name === "search"?
-      this.$router.replace(localtion):
-      this.$router.push(localtion)
-      ;
+      this.$route.name === "search"
+        ? this.$router.replace(localtion)
+        : this.$router.push(localtion);
+    },
+    outlogin() {
+      this.OUT_LOGIN();
+      //清除cookie
+      document.cookie = `nickName=;max-age=-1`;
+      document.cookie = `name=;max-age=-1`;
+      document.cookie = `token=;max-age=-1`;
+      //清除sessionStorage
+      sessionStorage.removeItem("nickName");
+      sessionStorage.removeItem("name");
+      sessionStorage.removeItem("token");
     },
   },
   mounted() {
@@ -106,6 +128,16 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+.logged {
+  font-size: 14px;
+}
+.logged span {
+  margin: 0 10px;
+}
+.logged a {
+  text-decoration: none;
+  color: #777;
 }
 .header-top-left {
   font-size: 14px;

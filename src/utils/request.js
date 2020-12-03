@@ -14,13 +14,13 @@ instance.interceptors.request.use(
 )
 instance.interceptors.response.use(
     res => {
-        if(res.data.code === 200){
+        if (res.data.code === 200) {
             NProgress.done()
-            return res.data.data
+            return res.data
         }
         NProgress.done()
         Message.error(res.data.message)
-        return Promise.reject(res.data.message)
+        return Promise.reject(res.data)
     },
     err => {
         NProgress.done()

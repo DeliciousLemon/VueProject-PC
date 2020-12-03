@@ -1,14 +1,36 @@
-import {userLogin} from "@api/login"
+import { userLogin } from "@api/login"
 export default {
     state: {
-        phone: "13700000000",
-        password: "111111",
+        userName: "",
+        userNick: "",
+        userToken: "",
+        isSaveUser: false,
     },
     getters: {},
     actions: {
-        login({ state }) {
-            userLogin(state.phone, state.password)
+        async login({ commit }, { userPhone, userPassword }) {
+            const loginMessage = await userLogin(userPhone, userPassword)
+            const { nickName, name, token } = loginMessage.data
+            if (loginMessage.code === 200) {
+                commit("LOGIN", { nickName, name, token }
+                )
+            }
+            return loginMessage
         }
     },
-    mutations: {}
+    mutations: {
+        LOGIN(state, { nickName, name, token }) {
+            state.userToken = token
+            state.userNick = nickName
+            state.userName = name
+        },
+        OUT_LOGIN(state) {
+            state.userToken = ''
+            state.userNick = ''
+            state.userName = ''
+        },
+        SET_SAVE_USER(state) {
+            state.isSaveUser = !state.isSaveUser
+        }
+    }
 }

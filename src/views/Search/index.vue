@@ -135,6 +135,7 @@
               </li>
             </ul>
           </div>
+          <!-- 分页器 -->
           <el-pagination
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
@@ -191,7 +192,7 @@ export default {
   },
   methods: {
     ...mapActions(["getSearch"]),
-    updateSearch(pageNo = 1) {
+    updateSearch(pageNo) {
       const {
         category1Id,
         category2Id,
@@ -276,7 +277,6 @@ export default {
     },
     //分页器函数
     handleSizeChange(pageSize) {
-      console.log(pageSize);
       this.searchText.pageSize = pageSize;
       this.updateSearch();
     },

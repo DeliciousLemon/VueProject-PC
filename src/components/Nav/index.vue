@@ -10,7 +10,7 @@
             <!-- 分类 -->
             <div class="bottom-left" @click="goSearch">
               <!-- 一级 -->
-              <ul v-for="category in categorys" :key="category.categoryId">
+              <ul v-for="category in categorys.data" :key="category.categoryId">
                 <div class="bottom-left-item">
                   <a
                     :data-categoryName="category.categoryName"

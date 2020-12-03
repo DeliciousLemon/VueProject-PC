@@ -4,7 +4,8 @@ import store from "@views/store"
 import router from "./router"
 import './plugins/element.js'
 import "./mock/mockServer"
-import "./style/iconfont.css"
+import "./style/iconfont-search.css"
+import "./style/iconfont-login.css"
 Vue.config.ProductionTip = false
 
 new Vue({

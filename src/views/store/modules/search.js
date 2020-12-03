@@ -1,4 +1,4 @@
-import {reqSearch} from "@api/search"
+import { reqSearch } from "@api/search"
 export default {
     state: {
         searchResult: {
@@ -25,9 +25,9 @@ export default {
         },
     },
     actions: {
-        async getSearch({ commit }, data={}) {
+        async getSearch({ commit }, data = {}) {
             const searchResult = await reqSearch(data)
-            commit("WRITE_SEARCHRESULTS", searchResult)
+            commit("WRITE_SEARCHRESULTS", searchResult.data)
         }
     },
     mutations: {
