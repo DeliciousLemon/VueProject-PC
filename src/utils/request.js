@@ -20,7 +20,7 @@ instance.interceptors.response.use(
         }
         NProgress.done()
         Message.error(res.data.message)
-        return Promise.reject(res.data)
+        return Promise.reject(res.data.data)
     },
     err => {
         NProgress.done()

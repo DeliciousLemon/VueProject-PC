@@ -21,7 +21,7 @@
           </div>
           <div class="other">
             <label
-              ><input type="checkbox" @click="setSave" />10秒内免登录</label
+              ><input type="checkbox" @click="setSave" />7天内免登录</label
             >
             <a href="###">忘记密码？</a>
           </div>
@@ -60,9 +60,9 @@ export default {
         //判断是否勾选免密登录
         if (this.isSaveUser) {
           //设置cookie保存用户登录信息
-          document.cookie = `nickName=${nickName};max-age=10`;
-          document.cookie = `name=${name};max-age=10`;
-          document.cookie = `token=${token};max-age=10`;
+          document.cookie = `nickName=${nickName};max-age=604800`;
+          document.cookie = `name=${name};max-age=604800`;
+          document.cookie = `token=${token};max-age=604800`;
         } else {
           //使用sessionStorage保存
           sessionStorage.setItem("nickName", nickName);

@@ -135,8 +135,15 @@
               </li>
             </ul>
           </div>
-          <!-- 分页器 -->
-          <el-pagination
+          <!-- 自定义分页器 -->
+          <Pagination
+            :total="total"
+            :pageNo="searchText.pageNo"
+            :pageSize="searchText.pageSize"
+            @handleSizeChange="handleSizeChange"
+          />
+          <!-- element分页器 -->
+          <!-- <el-pagination
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
             :current-page="searchText.pageNo"
@@ -147,7 +154,7 @@
             layout=" prev, pager, next,total, sizes, jumper"
             :total="total"
           >
-          </el-pagination>
+          </el-pagination> -->
         </div>
       </div>
     </div>
@@ -158,6 +165,7 @@
 import { mapGetters, mapActions } from "vuex";
 import SearchSelector from "./SearchSelector";
 import Nav from "@components/Nav";
+import Pagination from "@components/Pagination";
 export default {
   name: "Search",
   data() {
@@ -176,6 +184,7 @@ export default {
       },
       isPriceAgain: false,
       isAllAgain: false,
+      pages: [],
     };
   },
   computed: {
@@ -183,6 +192,7 @@ export default {
   },
   components: {
     SearchSelector,
+    Pagination,
     Nav,
   },
   watch: {
@@ -276,13 +286,13 @@ export default {
       this.updateSearch();
     },
     //分页器函数
-    handleSizeChange(pageSize) {
-      this.searchText.pageSize = pageSize;
-      this.updateSearch();
+    handleSizeChange(pageNo) {
+      this.updateSearch(pageNo);
     },
+    /*
     handleCurrentChange(currentPage) {
       this.updateSearch(currentPage);
-    },
+    }, */
   },
   mounted() {
     this.updateSearch();

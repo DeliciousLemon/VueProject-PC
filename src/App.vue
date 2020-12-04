@@ -43,13 +43,12 @@ export default {
             this.LOGIN({ nickName, name, token });
           }
         }
-      } else {
-        //勾选免密登录时
-        if (this.isSaveUser) {
-          //判断cookie是否过期
-          if (!document.cookie) {
-            this.OUT_LOGIN();
-          }
+      }
+      //勾选免密登录时
+      if (this.isSaveUser) {
+        //判断cookie是否过期
+        if (!document.cookie) {
+          this.OUT_LOGIN();
         }
       }
     },
