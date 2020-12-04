@@ -95,9 +95,9 @@
                 <div class="list-wrap">
                   <!-- 商品图片 -->
                   <div class="p-img">
-                    <a href="" target="_blank"
+                    <router-link to="/detail" target="_blank"
                       ><img :src="goods.defaultImg"
-                    /></a>
+                    /></router-link>
                   </div>
                   <!-- 商品价格 -->
                   <div class="price">
@@ -108,11 +108,10 @@
                   </div>
                   <!-- 商品属性 -->
                   <div class="attr">
-                    <a
+                    <router-link
                       target="_blank"
-                      href=""
-                      title="促销信息，下单即赠送三个月CIBN视频会员卡！【小米电视新品4A 58 火爆预约中】"
-                      >{{ goods.title }}</a
+                      to="/detail"
+                      >{{ goods.title }}</router-link
                     >
                   </div>
                   <!-- 商品评论 -->

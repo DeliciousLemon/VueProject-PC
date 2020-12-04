@@ -1,7 +1,12 @@
 import { reqSearch } from "@api/search"
 export default {
     state: {
-        searchResult: {},
+        searchResult: {
+            trademarkList:{},
+            attrsList:{},
+            goodsList:{},
+            total:0
+        },
     },
     getters: {
         trademarkList(state) {

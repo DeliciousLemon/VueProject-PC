@@ -1,17 +1,17 @@
 import Vue from "vue"
 import VueRouter from "vue-router"
 
-import Home from "../views/Home"
-import Register from "../views/Register"
-import Login from "../views/Login"
-import Search from "../views/Search"
+import Home from "@views/Home"
+import Register from "@views/Register"
+import Login from "@views/Login"
+import Search from "@views/Search"
+import Detail from "@views/Detail"
 
 Vue.use(VueRouter)
 
 //重写push和replace
 const push = VueRouter.prototype.push
 const replace = VueRouter.prototype.replace
-
 VueRouter.prototype.push = function (localtion, ontemplate, onAbort) {
     if (ontemplate && onAbort) {
         return push.call(this, localtion, ontemplate, onAbort)
@@ -51,5 +51,14 @@ export default new VueRouter({
             path: "/search/:searchText?",
             component: Search
         },
-    ]
+        {
+            name: "detail",
+            path: "/detail",
+            component: Detail
+        }
+    ],
+    //页面默认位置
+    scrollBehavior() {
+        return { x: 0, y: 0 }
+    }
 })
