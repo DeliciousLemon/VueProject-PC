@@ -95,7 +95,7 @@
                 <div class="list-wrap">
                   <!-- 商品图片 -->
                   <div class="p-img">
-                    <router-link to="/detail" target="_blank"
+                    <router-link :to="`/detail/${goods.id}`" target="_blank"
                       ><img :src="goods.defaultImg"
                     /></router-link>
                   </div>
@@ -110,7 +110,7 @@
                   <div class="attr">
                     <router-link
                       target="_blank"
-                      to="/detail"
+                      :to="`/detail/${goods.id}`"
                       >{{ goods.title }}</router-link
                     >
                   </div>

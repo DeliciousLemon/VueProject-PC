@@ -4,9 +4,9 @@
     <div class="box">
       <!-- 路径 -->
       <div class="address">
-        <span>手机</span>
-        <span>手机通讯</span>
-        <span>手机</span>
+        <span>{{ categoryView.category1Name }}</span>
+        <span>{{ categoryView.category2Name }}</span>
+        <span>{{ categoryView.category3Name }}</span>
       </div>
       <!-- 上部分 -->
       <div class="top">
@@ -19,13 +19,13 @@
         </div>
         <!-- 商品属性选择 -->
         <div class="top-right">
-          <div class="title">一加八</div>
-          <div class="discription">出出出出出出出出出出出出出出出出出</div>
+          <div class="title">{{ skuInfo.skuName }}</div>
+          <div class="discription">{{ skuInfo.skuDesc }}</div>
           <div class="priceBox">
             <div>
               价 格
               <span>￥</span>
-              <span class="price">4000</span>
+              <span class="price">{{ skuInfo.price }}</span>
               <a href="###">降价提醒</a>
             </div>
             <div class="preferential">
@@ -44,12 +44,19 @@
             <span>配 送 至</span>
             <span>广东省 深圳市 宝安区</span>
           </div>
-          <div class="colorCheck">
-            <span>选择颜色</span>
+          <div
+            class="colorCheck"
+            v-for="spuSaleAttr in spuSaleAttrList"
+            :key="spuSaleAttr.id"
+          >
+            <span>{{ spuSaleAttr.saleAttrName }}</span>
             <ul>
-              <li>白色</li>
-              <li>灰色</li>
-              <li>灰色</li>
+              <li
+                v-for="spuSaleAttrValue in spuSaleAttr.spuSaleAttrValueList"
+                :key="spuSaleAttrValue.id"
+              >
+                {{ spuSaleAttrValue.saleAttrName }}
+              </li>
             </ul>
           </div>
           <div class="buyCount">
@@ -78,6 +85,8 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from "vuex";
+
 import Nav from "@components/Nav";
 import Magnifier from "./Magnifier";
 import SmallPhotoList from "./SmallPhotoList";
@@ -87,6 +96,15 @@ export default {
     Nav,
     Magnifier,
     SmallPhotoList,
+  },
+  computed: {
+    ...mapGetters(["categoryView", "spuSaleAttrList", "skuInfo"]),
+  },
+  methods: {
+    ...mapActions(["getDetail"]),
+  },
+  mounted() {
+    this.getDetail(this.$route.params.id);
   },
 };
 </script>
@@ -191,31 +209,31 @@ export default {
 .buyCount {
   display: flex;
 }
-.count{
+.count {
   display: flex;
-  border:1px solid rgba(119, 119, 119, 0.315);
+  border: 1px solid rgba(119, 119, 119, 0.315);
   margin: 20px 10px;
 }
 .count input {
   width: 20px;
   height: 30px;
   text-align: center;
-  border:none;
+  border: none;
 }
 .count div button {
   width: 15px;
   height: 17px;
   line-height: 15px;
-  display:block;
-  border:none;
+  display: block;
+  border: none;
 }
-.addCar{
+.addCar {
   height: 34px;
   width: 100px;
   margin: 20px 0;
-  border:none;
-  color:white;
+  border: none;
+  color: white;
   background-color: red;
-  outline:none;
+  outline: none;
 }
 </style>
