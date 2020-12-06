@@ -13,7 +13,7 @@
         <!-- 图片展示 -->
         <div class="top-left">
           <!-- 放大镜 -->
-          <Magnifier :skuImageList="skuInfo.skuImageList"/>
+          <Magnifier :skuImageList="skuInfo.skuImageList" />
           <!-- 轮播图 -->
           <SmallPhotoList />
         </div>
@@ -45,7 +45,7 @@
             <span>广东省 深圳市 宝安区</span>
           </div>
           <div
-            class="colorCheck"
+            class="attrCheck"
             v-for="spuSaleAttr in spuSaleAttrList"
             :key="spuSaleAttr.id"
           >
@@ -54,20 +54,31 @@
               <li
                 v-for="spuSaleAttrValue in spuSaleAttr.spuSaleAttrValueList"
                 :key="spuSaleAttrValue.id"
+                :class="{
+                  attrActive:
+                    checkedAttr[spuSaleAttr.saleAttrName] ===
+                    spuSaleAttrValue.saleAttrValueName,
+                }"
+                @click="
+                  attrChecked(
+                    spuSaleAttr.saleAttrName,
+                    spuSaleAttrValue.saleAttrValueName
+                  )
+                "
               >
-                {{ spuSaleAttrValue.saleAttrName }}
+                {{ spuSaleAttrValue.saleAttrValueName }}
               </li>
             </ul>
           </div>
           <div class="buyCount">
             <div class="count">
-              <input type="text" value="1" disabled />
+              <input type="text" :value="count" disabled />
               <div>
-                <button>+</button>
-                <button>-</button>
+                <button @click="addCount">+</button>
+                <button @click="subCount">-</button>
               </div>
             </div>
-            <button class="addCar">加入购物车</button>
+            <button class="addCar" @click="addCart">加入购物车</button>
           </div>
         </div>
       </div>
@@ -85,13 +96,19 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapGetters, mapMutations } from "vuex";
 
 import Nav from "@components/Nav";
 import Magnifier from "./Magnifier";
 import SmallPhotoList from "./SmallPhotoList";
 export default {
   name: "Detail",
+  data() {
+    return {
+      checkedAttr: {},
+      count: 1,
+    };
+  },
   components: {
     Nav,
     Magnifier,
@@ -101,7 +118,35 @@ export default {
     ...mapGetters(["categoryView", "spuSaleAttrList", "skuInfo"]),
   },
   methods: {
-    ...mapActions(["getDetail"]),
+    ...mapActions(["getDetail", "getAddCart"]),
+    ...mapMutations(["ADD_MY_GOODS"]),
+    //选中属性变色，保存选择数据
+    attrChecked(key, value) {
+      this.checkedAttr[key] = value;
+      //强制渲染页面
+      this.$forceUpdate();
+      this.ADD_MY_GOODS(this.checkedAttr);
+    },
+    //数量增加
+    addCount() {
+      this.count++;
+    },
+    //数量减少
+    subCount() {
+      if (this.count <= 1) return;
+      this.count--;
+    },
+    //添加购物车
+    addCart() {
+      if (Object.keys(this.checkedAttr).length < 3) {
+        alert("请选择属性");
+        return;
+      }
+      const skuID = this.$route.params.id;
+      const skuNum = String(this.count);
+      this.getAddCart({skuID, skuNum});
+      this.$router.push("/addcartsuccess");
+    },
   },
   mounted() {
     this.getDetail(this.$route.params.id);
@@ -190,14 +235,15 @@ export default {
 .port span:first-child {
   margin: 0 10px;
 }
-.colorCheck {
+.attrCheck {
   display: flex;
   align-items: center;
+  margin: 20px 0;
 }
-.colorCheck span {
+.attrCheck span {
   margin: 0 10px;
 }
-.colorCheck li {
+.attrCheck li {
   float: left;
   height: 30px;
   border: 1px solid #777;
@@ -205,6 +251,11 @@ export default {
   line-height: 30px;
   padding: 0 10px;
   margin: 0 5px;
+  cursor: pointer;
+}
+.attrCheck .attrActive {
+  border: 1px solid rgb(45, 109, 182);
+  background-color: rgb(15, 182, 233);
 }
 .buyCount {
   display: flex;
@@ -226,6 +277,7 @@ export default {
   line-height: 15px;
   display: block;
   border: none;
+  outline: none;
 }
 .addCar {
   height: 34px;

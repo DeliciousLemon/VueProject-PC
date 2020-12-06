@@ -1,11 +1,14 @@
-import { reqDetail } from "@api/detail"
+import { reqDetail, reqAddCart } from "@api/detail"
 export default {
     state: {
         detailList: {
             categoryView: {},
             spuSaleAttrList: {},
             skuInfo: {}
-        }
+        },
+        myGoods: {
+            attr: {},
+        },
     },
     getters: {
         categoryView(state) {
@@ -20,13 +23,21 @@ export default {
     },
     actions: {
         async getDetail({ commit }, detailId) {
-            const detailList =await reqDetail(detailId)
+            const detailList = await reqDetail(detailId)
             commit("WRITE_DETAILLIST", detailList)
+        },
+        getAddCart({commit}, { skuID, skuNum }) {
+            reqAddCart(skuID, skuNum)
+            console.log(commit)
         }
     },
     mutations: {
         WRITE_DETAILLIST(state, detailList) {
             state.detailList = detailList.data
+        },
+        //保存选择商品数据
+        ADD_MY_GOODS(state, attr) {
+            state.myGoods.attr = attr
         }
     }
 }
