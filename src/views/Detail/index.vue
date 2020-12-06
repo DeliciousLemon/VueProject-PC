@@ -120,12 +120,11 @@ export default {
   methods: {
     ...mapActions(["getDetail", "getAddCart"]),
     ...mapMutations(["ADD_MY_GOODS"]),
-    //选中属性变色，保存选择数据
+    //选中属性变色
     attrChecked(key, value) {
       this.checkedAttr[key] = value;
       //强制渲染页面
       this.$forceUpdate();
-      this.ADD_MY_GOODS(this.checkedAttr);
     },
     //数量增加
     addCount() {
@@ -142,9 +141,17 @@ export default {
         alert("请选择属性");
         return;
       }
+      //发送添加购物车的请求
       const skuID = this.$route.params.id;
       const skuNum = String(this.count);
-      this.getAddCart({skuID, skuNum});
+      this.getAddCart({ skuID, skuNum });
+      //保存数据用于 添加成功页面展示
+      const attr = this.checkedAttr;
+      const name = this.skuInfo.skuName;
+      const img = this.skuInfo.skuImageList[0].imgUrl;
+      const count = this.count;
+      this.ADD_MY_GOODS({ attr, name, img, count });
+      //跳转页面
       this.$router.push("/addcartsuccess");
     },
   },
