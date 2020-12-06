@@ -25,6 +25,8 @@
           left: -glassLeft * 2 + 'px',
           top: -glassTop * 2 + 'px',
         }"
+        width="800px"
+        height="800px"
       />
     </div>
   </div>

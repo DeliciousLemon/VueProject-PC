@@ -7,6 +7,7 @@ import Login from "@views/Login"
 import Search from "@views/Search"
 import Detail from "@views/Detail"
 import AddCartSuccess from "@views/AddCartSuccess"
+import MyCart from "@views/MyCart"
 
 Vue.use(VueRouter)
 
@@ -62,6 +63,11 @@ export default new VueRouter({
             path: "/addcartsuccess",
             component: AddCartSuccess
         },
+        {
+            name: "mycart",
+            path: "/mycart",
+            component: MyCart
+        }
     ],
     //页面默认位置
     scrollBehavior() {

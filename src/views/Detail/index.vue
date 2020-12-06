@@ -137,7 +137,7 @@ export default {
     },
     //添加购物车
     addCart() {
-      if (Object.keys(this.checkedAttr).length < 3) {
+      if (Object.keys(this.checkedAttr).length < this.spuSaleAttrList.length) {
         alert("请选择属性");
         return;
       }

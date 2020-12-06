@@ -10,7 +10,7 @@
       </div>
       <div class="paydetail">
         <p class="button">
-          <router-link class="btn-look" to="/">查看购物车</router-link>
+          <router-link class="btn-look" to="/mycart">查看购物车</router-link>
           <router-link class="btn-goshop" to="/">继续购物</router-link>
         </p>
       </div>

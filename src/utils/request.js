@@ -16,10 +16,10 @@ instance.interceptors.response.use(
     res => {
         if (res.data.code === 200) {
             NProgress.done()
-            console.log(res.data.data)
             return res.data
         }
         NProgress.done()
+        console.log(res)
         Message.error(res.data.message)
         return Promise.reject(res.data.data)
     },
