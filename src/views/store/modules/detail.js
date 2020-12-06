@@ -27,7 +27,6 @@ export default {
     mutations: {
         WRITE_DETAILLIST(state, detailList) {
             state.detailList = detailList.data
-            console.log(detailList,11111)
         }
     }
 }

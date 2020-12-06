@@ -13,7 +13,7 @@
         <!-- 图片展示 -->
         <div class="top-left">
           <!-- 放大镜 -->
-          <Magnifier />
+          <Magnifier :skuImageList="skuInfo.skuImageList"/>
           <!-- 轮播图 -->
           <SmallPhotoList />
         </div>
