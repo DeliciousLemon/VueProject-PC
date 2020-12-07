@@ -29,7 +29,6 @@
           </li>
           <li class="cart-list-con5">
             <a
-              href="javascript:void(0)"
               class="mins"
               @click="updataCount(String(goods.skuId), '-1')"
               >-</a
@@ -42,7 +41,6 @@
               class="itxt"
             />
             <a
-              href="javascript:void(0)"
               class="plus"
               @click="updataCount(String(goods.skuId), '1')"
               >+</a
@@ -103,7 +101,6 @@ export default {
     },
     //选中的商品总价
     totalPrice() {
-      console.log(this.cartList);
       if (!this.cartList.data) return;
       return this.cartList.data
         .filter((item) => item.isChecked === 1)
@@ -113,11 +110,19 @@ export default {
   methods: {
     ...mapActions(["getCartList", "updataCartList"]),
     //更新数据
-    updataCount(id, num) {
-      this.updataCartList([id, num]);
+    async updataCount(id, num) {
+      await this.updataCartList([id, num]);
     },
   },
   mounted() {
+    const sessionToken = sessionStorage.getItem("token");
+    const cookieToken =
+      document.cookie && document.cookie.split(";")[2].split("=")[1];
+    if (!sessionToken && !cookieToken) {
+      this.$router.push("/login");
+      return
+    }
+    
     this.getCartList();
   },
 };

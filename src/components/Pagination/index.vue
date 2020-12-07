@@ -20,7 +20,7 @@
     >
       {{ num + pageLeft }}
     </button>
-    <span v-show="!(pageRight >= allPages)">...</span>
+    <span v-show="pageRight < allPages && pageRight > 2">...</span>
     <button
       :class="{ active: currentPage === allPages }"
       @click="skipPage(allPages)"
@@ -77,6 +77,9 @@ export default {
     pageCenter() {
       if (this.allPages >= 7) {
         return 5;
+      }
+      if (this.allPages <= 5) {
+        return this.allPages - 2;
       }
       return this.allPages;
     },

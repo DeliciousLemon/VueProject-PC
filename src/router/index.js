@@ -42,6 +42,7 @@ export default new VueRouter({
             }
         },
         {
+            name:"register",
             path: "/login",
             component: Login,
             meta: {

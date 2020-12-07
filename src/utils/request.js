@@ -6,23 +6,32 @@ import "nprogress/nprogress.css";
 const instance = axios.create({
     baseURL: "/api",
 })
+const sessionToken = sessionStorage.getItem("token")
+const cookieToken = document.cookie && document.cookie.split(";")[2].split("=")[1]
 instance.interceptors.request.use(
     (req) => {
         NProgress.start()
+        req.headers.token = sessionToken || cookieToken
         return req
     }
 )
 instance.interceptors.response.use(
+    //请求成功
     res => {
+        //功能成功
         if (res.data.code === 200) {
             NProgress.done()
             return res.data
         }
+        //功能失败
         NProgress.done()
-        console.log(res)
-        Message.error(res.data.message)
-        return Promise.reject(res.data.data)
+        console.log(typeof(res.data.data))
+        typeof(res.data.data) === "object" ?
+            Message.error(res.data.message) :
+            Message.error(res.data.data)
+        return Promise.reject(res.data)
     },
+    //请求失败
     err => {
         NProgress.done()
         const message = err.message || "网络出现问题"

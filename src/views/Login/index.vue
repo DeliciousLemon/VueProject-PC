@@ -26,7 +26,9 @@
             <a href="###">忘记密码？</a>
           </div>
           <button @click="userLogin">登&nbsp;录</button>
-          <div class="toRegister"><a href="###">没有账号？立即注册</a></div>
+          <div class="toRegister">
+            <router-link to="/register">没有账号？立即注册</router-link>
+          </div>
         </div>
       </div>
     </div>

@@ -26,6 +26,7 @@ export default {
                 if (item.skuId === skuID) {
                     item.skuNum += Number(skuNum)
                 }
+                return item
             })
         }
     }

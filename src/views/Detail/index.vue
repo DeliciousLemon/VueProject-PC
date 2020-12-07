@@ -142,7 +142,7 @@ export default {
         return;
       }
       //发送添加购物车的请求
-      const skuID = this.$route.params.id;
+      const skuID = String(this.skuInfo.id);
       const skuNum = String(this.count);
       this.getAddCart({ skuID, skuNum });
       //保存数据用于 添加成功页面展示
