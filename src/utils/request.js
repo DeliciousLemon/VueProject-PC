@@ -27,7 +27,6 @@ instance.interceptors.response.use(
         }
         //功能失败
         NProgress.done()
-        console.log(typeof(res.data.data))
         typeof(res.data.data) === "object" ?
             Message.error(res.data.message) :
             Message.error(res.data.data)

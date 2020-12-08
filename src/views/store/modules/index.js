@@ -11,5 +11,5 @@ export default {
     search,
     detail,
     cart,
-    register
+    register,
 }

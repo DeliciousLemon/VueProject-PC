@@ -65,10 +65,11 @@
         </ul>
       </div>
       <div class="bbs">
-        <h5>买家留言：</h5>
+        <h5>买家留言</h5>
         <textarea
           placeholder="建议留言前先与商家沟通确认"
           class="remarks-cont"
+          v-model="comment"
         ></textarea>
       </div>
       <div class="line"></div>
@@ -109,13 +110,14 @@
       </div>
     </div>
     <div class="sub clearFix">
-      <router-link class="subBtn" to="/pay">提交订单</router-link>
+      <button class="subBtn" @click="commit">提交订单</button>
     </div>
   </div>
 </template>
 
 <script>
-import { reqUserData } from "@api/order";
+import { reqUserData,reqOrder } from "@api/order";
+
 export default {
   name: "Order",
   data() {
@@ -126,6 +128,8 @@ export default {
       totalPrice: 0,
       user: {},
       isAddress: 0,
+      comment:"",
+      tradeNo:""
     };
   },
   methods: {
@@ -135,6 +139,25 @@ export default {
       this.user.phone = phone;
       this.isAddress = id;
     },
+    async commit(){
+      const userOrder = {
+        consignee:this.user.name,
+        consigneeTel:this.user.phone,
+        deliveryAddress:this.user.address,
+        paymentWay:"ONLINE",
+        orderComment:this.comment,
+        orderDetailList:this.detailList
+      }
+      console.log(this.tradeNo,112311132)
+      const orderID = await reqOrder(this.tradeNo,userOrder)
+      console.log(orderID)
+      this.$router.replace({
+        path:"/pay",
+        query:{
+          orderID:orderID.data
+        }
+      })
+    }
   },
   async mounted() {
     //获取用户地址
@@ -142,6 +165,8 @@ export default {
     this.userAddressList = userData.data.userAddressList;
     this.detailList = userData.data.detailArrayList;
     this.totalPrice = userData.data.totalAmount;
+    this.tradeNo = userData.data.tradeNo
+    console.log(userData)
     //设置默认地址
     const defaultAddress = this.userAddressList.find(
       (item) => item.isDefault === "1"
