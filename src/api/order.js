@@ -14,3 +14,10 @@ export const reqOrder = (tradeNo,userOrder) => {
         data:userOrder
     })
 }
+//支付
+export const reqPay = (id) => {
+    return request({
+        method:"GET",
+        url:`/payment/weixin/createNative/${id}`,
+    })
+}
