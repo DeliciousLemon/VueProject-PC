@@ -103,6 +103,7 @@ export default {
       sessionStorage.removeItem("nickName");
       sessionStorage.removeItem("name");
       sessionStorage.removeItem("token");
+      this.$router.replace("/")
     },
   },
   mounted() {

@@ -20,3 +20,9 @@ export const reqDelGoods = function (skuID) {
         data: {}
     })
 }
+export const reqChecked = function (skuID,isChecked) {
+    return request({
+        method: "GET",
+        url: `/cart/checkCart/${skuID}/${isChecked}`,
+    })
+}

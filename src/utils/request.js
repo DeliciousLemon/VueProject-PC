@@ -7,7 +7,9 @@ const instance = axios.create({
     baseURL: "/api",
 })
 const sessionToken = sessionStorage.getItem("token")
-const cookieToken = document.cookie && document.cookie.split(";")[2].split("=")[1]
+const cookieToken = document.cookie && document.cookie.split(";").filter(item=>{
+    return item.includes("token")
+})[0].split("=")[1]
 instance.interceptors.request.use(
     (req) => {
         NProgress.start()

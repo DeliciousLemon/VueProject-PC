@@ -1,4 +1,4 @@
-import { reqCartList, reqCartCount, reqDelGoods } from "@api/cart"
+import { reqCartList, reqCartCount, reqDelGoods, reqChecked } from "@api/cart"
 
 export default {
     state: {
@@ -20,6 +20,11 @@ export default {
         delCart({ commit }, id) {
             reqDelGoods(id)
             commit("DEL_GOODS", id)
+        },
+        //单选
+        checked({ commit }, { id, isChecked }) {
+            reqChecked(id, isChecked)
+            commit("WRITE_IS_CHECKED", { id, isChecked })
         }
     },
     mutations: {
@@ -36,6 +41,11 @@ export default {
         },
         DEL_GOODS(state, id) {
             state.cartList.data = state.cartList.data.filter(item => item.skuId !== id)
+        },
+        WRITE_IS_CHECKED(state, { id, isChecked }) {
+            state.cartList.data.map(item => {
+                item.isChecked = item.skuId === id ? isChecked : item.isChecked
+            })
         }
     }
 }

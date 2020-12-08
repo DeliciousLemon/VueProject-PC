@@ -10,6 +10,7 @@ export default {
     actions: {
         async login({ commit }, { userPhone, userPassword }) {
             const loginMessage = await userLogin(userPhone, userPassword)
+            console.log(loginMessage)
             const { nickName, name, token } = loginMessage.data
             if (loginMessage.code === 200) {
                 commit("LOGIN", { nickName, name, token }

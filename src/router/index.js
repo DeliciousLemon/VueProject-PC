@@ -8,6 +8,8 @@ import Search from "@views/Search"
 import Detail from "@views/Detail"
 import AddCartSuccess from "@views/AddCartSuccess"
 import MyCart from "@views/MyCart"
+import Pay from "@views/Pay"
+import Order from "@views/Order"
 
 Vue.use(VueRouter)
 
@@ -68,6 +70,16 @@ export default new VueRouter({
             name: "mycart",
             path: "/mycart",
             component: MyCart
+        },
+        {
+            name:"pay",
+            path:"/pay",
+            component:Pay
+        },
+        {
+            name:"order",
+            path:"/order",
+            component:Order
         }
     ],
     //页面默认位置

@@ -17,7 +17,7 @@
               type="checkbox"
               name="chk_list"
               :checked="goods.isChecked"
-              @click="checked(goods.skuId)"
+              @click="singleChecked(goods.skuId, goods.isChecked)"
             />
           </li>
           <li class="cart-list-con2">
@@ -45,11 +45,7 @@
               minnum="1"
               class="itxt"
             />
-            <a
-              class="plus"
-              @click="updataCount(goods.skuId, goods.skuNum > 9 ? 0 : 1)"
-              >+</a
-            >
+            <a class="plus" @click="updataCount(goods.skuId, 1)">+</a>
           </li>
           <li class="cart-list-con6">
             <span class="sum">{{ goods.skuPrice * goods.skuNum }}</span>
@@ -73,7 +69,7 @@
         <span>全选</span>
       </div>
       <div class="option">
-        <a>删除选中的商品</a>
+        <a @click="delChecked">删除选中的商品</a>
         <a>移到我的关注</a>
         <a>清除下柜商品</a>
       </div>
@@ -87,7 +83,7 @@
           <i class="summoney">{{ totalPrice }}</i>
         </div>
         <div class="sumbtn">
-          <a class="sum-btn" href="###" target="_blank">结算</a>
+          <a class="sum-btn" @click="submit">结算</a>
         </div>
       </div>
     </div>
@@ -124,15 +120,14 @@ export default {
           this.cartList.data.every((item) => item.isChecked === 1)
         );
       },
-      set(value) {
-        console.log(value);
+      set() {
         this.cartList.data &&
           this.cartList.data.every((item) => item.isChecked === 1);
       },
     },
   },
   methods: {
-    ...mapActions(["getCartList", "updataCartList", "delCart"]),
+    ...mapActions(["getCartList", "updataCartList", "delCart", "checked"]),
     //更新数据
     async updataCount(skuID, skuNum) {
       await this.updataCartList({ skuID, skuNum });
@@ -144,20 +139,28 @@ export default {
       }
     },
     //单选
-    checked(id) {
-      this.cartList.data.map((item) => {
-        if (item.skuId === id) {
-          item.isChecked = item.isChecked ? 0 : 1;
-        }
-      });
+    singleChecked(id, isChecked) {
+      isChecked = isChecked === 0 ? 1 : 0;
+      this.checked({ id, isChecked });
     },
     //全选
     allChecked() {
-      const all = this.isAllChecked
-      this.cartList.data.map(
-        (item) => (item.isChecked = all ? 0 : 1)
-      );
+      const all = this.isAllChecked;
+      this.cartList.data.map((item) => (item.isChecked = all ? 0 : 1));
     },
+    //删除选中商品
+    delChecked() {
+      this.cartList.data.map((item) => {
+        if (item.isChecked === 1) {
+          this.delCart(item.skuId);
+        }
+      });
+    },
+    //结算
+    submit(){
+      this.delChecked()
+      this.$router.replace("/order")
+    }
   },
   mounted() {
     //判断是否登录
@@ -168,6 +171,7 @@ export default {
       this.$router.push("/login");
       return;
     }
+    //获取购物车数据
     this.getCartList();
   },
 };
