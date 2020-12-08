@@ -1,4 +1,4 @@
-import { reqCartList, reqCartCount } from "@api/cart"
+import { reqCartList, reqCartCount, reqDelGoods } from "@api/cart"
 
 export default {
     state: {
@@ -12,22 +12,30 @@ export default {
             commit("WRITE_CART_LIST", cartListValue)
         },
         //更新数据
-        updataCartList({ commit }, [skuID, skuNum]) {
-            reqCartCount(skuID, skuNum)
-            commit("UPDATA_CART_LIST", [skuID, skuNum])
+        async updataCartList({ commit }, { skuID, skuNum }) {
+            await reqCartCount(skuID, skuNum)
+            commit("UPDATA_CART_LIST", { skuID, skuNum })
+        },
+        //删除
+        delCart({ commit }, id) {
+            reqDelGoods(id)
+            commit("DEL_GOODS", id)
         }
     },
     mutations: {
         WRITE_CART_LIST(state, cartListValue) {
             state.cartList = cartListValue
         },
-        UPDATA_CART_LIST(state, [skuID, skuNum]) {
+        UPDATA_CART_LIST(state, { skuID, skuNum }) {
             state.cartList.data.map(item => {
                 if (item.skuId === skuID) {
                     item.skuNum += Number(skuNum)
                 }
                 return item
             })
+        },
+        DEL_GOODS(state, id) {
+            state.cartList.data = state.cartList.data.filter(item => item.skuId !== id)
         }
     }
 }

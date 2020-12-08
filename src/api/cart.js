@@ -13,3 +13,10 @@ export const reqCartCount = function (skuID,skuNum) {
         data: {}
     })
 }
+export const reqDelGoods = function (skuID) {
+    return request({
+        method: "DELETE",
+        url: `/cart/deleteCart/${skuID}`,
+        data: {}
+    })
+}

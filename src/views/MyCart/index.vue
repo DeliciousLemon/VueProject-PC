@@ -13,7 +13,12 @@
       <div class="cart-body" v-for="goods in cartList.data" :key="goods.id">
         <ul class="cart-list">
           <li class="cart-list-con1">
-            <input type="checkbox" name="chk_list" :checked="goods.isChecked" />
+            <input
+              type="checkbox"
+              name="chk_list"
+              :checked="goods.isChecked"
+              @click="checked(goods.skuId)"
+            />
           </li>
           <li class="cart-list-con2">
             <img :src="goods.imgUrl" />
@@ -30,7 +35,7 @@
           <li class="cart-list-con5">
             <a
               class="mins"
-              @click="updataCount(String(goods.skuId), '-1')"
+              @click="updataCount(goods.skuId, goods.skuNum < 2 ? 0 : -1)"
               >-</a
             >
             <input
@@ -42,7 +47,7 @@
             />
             <a
               class="plus"
-              @click="updataCount(String(goods.skuId), '1')"
+              @click="updataCount(goods.skuId, goods.skuNum > 9 ? 0 : 1)"
               >+</a
             >
           </li>
@@ -50,7 +55,7 @@
             <span class="sum">{{ goods.skuPrice * goods.skuNum }}</span>
           </li>
           <li class="cart-list-con7">
-            <a href="#none" class="sindelet">删除</a>
+            <a class="sindelet" @click="delGoods(goods.skuId)">删除</a>
             <br />
             <a href="#none">移到收藏</a>
           </li>
@@ -59,13 +64,18 @@
     </div>
     <div class="cart-tool">
       <div class="select-all">
-        <input class="chooseAll" type="checkbox" />
+        <input
+          class="chooseAll"
+          type="checkbox"
+          v-model="isAllChecked"
+          @click="allChecked"
+        />
         <span>全选</span>
       </div>
       <div class="option">
-        <a href="#none">删除选中的商品</a>
-        <a href="#none">移到我的关注</a>
-        <a href="#none">清除下柜商品</a>
+        <a>删除选中的商品</a>
+        <a>移到我的关注</a>
+        <a>清除下柜商品</a>
       </div>
       <div class="money-box">
         <div class="chosed">
@@ -106,23 +116,58 @@ export default {
         .filter((item) => item.isChecked === 1)
         .reduce((p, c) => p + c.skuNum * c.skuPrice, 0);
     },
+    //判断是否全选
+    isAllChecked: {
+      get() {
+        return (
+          this.cartList.data &&
+          this.cartList.data.every((item) => item.isChecked === 1)
+        );
+      },
+      set(value) {
+        console.log(value);
+        this.cartList.data &&
+          this.cartList.data.every((item) => item.isChecked === 1);
+      },
+    },
   },
   methods: {
-    ...mapActions(["getCartList", "updataCartList"]),
+    ...mapActions(["getCartList", "updataCartList", "delCart"]),
     //更新数据
-    async updataCount(id, num) {
-      await this.updataCartList([id, num]);
+    async updataCount(skuID, skuNum) {
+      await this.updataCartList({ skuID, skuNum });
+    },
+    //删除
+    delGoods(id) {
+      if (confirm("是否删除该商品?")) {
+        this.delCart(id);
+      }
+    },
+    //单选
+    checked(id) {
+      this.cartList.data.map((item) => {
+        if (item.skuId === id) {
+          item.isChecked = item.isChecked ? 0 : 1;
+        }
+      });
+    },
+    //全选
+    allChecked() {
+      const all = this.isAllChecked
+      this.cartList.data.map(
+        (item) => (item.isChecked = all ? 0 : 1)
+      );
     },
   },
   mounted() {
+    //判断是否登录
     const sessionToken = sessionStorage.getItem("token");
     const cookieToken =
       document.cookie && document.cookie.split(";")[2].split("=")[1];
     if (!sessionToken && !cookieToken) {
       this.$router.push("/login");
-      return
+      return;
     }
-    
     this.getCartList();
   },
 };
@@ -132,6 +177,7 @@ export default {
 .cart {
   width: 1200px;
   margin: 0 auto;
+  user-select: none;
 
   h4 {
     margin: 9px 0;

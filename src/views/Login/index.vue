@@ -7,18 +7,31 @@
             <a href="###">扫码登录</a>
             <a href="###">账户登录</a>
           </div>
-          <div class="phone">
-            <i class="iconfont icon-mima"></i>
-            <input type="text" placeholder="请输入手机号" v-model="userPhone" />
-          </div>
-          <div class="password">
-            <i class="iconfont icon-shoujihao"></i>
-            <input
-              type="password"
-              placeholder="请输入密码"
-              v-model="userPassword"
-            />
-          </div>
+          <ValidationProvider
+            rules="requiredLogin|phoneLength"
+            v-slot="{ errors }"
+          >
+            <div class="phone">
+              <i class="iconfont icon-mima"></i>
+              <input
+                type="text"
+                placeholder="请输入手机号"
+                v-model="userPhone"
+              />
+            </div>
+            <span class="error">{{ errors[0] }}</span>
+          </ValidationProvider>
+          <ValidationProvider rules="requiredLogin" v-slot="{ errors }">
+            <div class="password">
+              <i class="iconfont icon-shoujihao"></i>
+              <input
+                type="password"
+                placeholder="请输入密码"
+                v-model="userPassword"
+              />
+            </div>
+            <span class="error">{{ errors[0] }}</span>
+          </ValidationProvider>
           <div class="other">
             <label
               ><input type="checkbox" @click="setSave" />1小时内免登录</label
@@ -37,6 +50,18 @@
 
 <script>
 import { mapActions, mapState, mapMutations } from "vuex";
+import { ValidationProvider, extend } from "vee-validate";
+import { required } from "vee-validate/dist/rules";
+extend("requiredLogin", {
+  ...required,
+  message: "此项不能为空",
+});
+extend("phoneLength", {
+  validate(value) {
+    return value.length === 11;
+  },
+  message: "请输入十一位手机号",
+});
 export default {
   name: "Login",
   data() {
@@ -78,10 +103,18 @@ export default {
       this.SET_SAVE_USER();
     },
   },
+  components: {
+    ValidationProvider,
+  },
 };
 </script>
 
 <style lang="less" scoped>
+.error{
+  color:red;
+  font-size:14px;
+  margin: 0 50px;
+}
 a {
   text-decoration: none;
 }
