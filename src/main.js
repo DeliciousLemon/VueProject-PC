@@ -2,6 +2,7 @@ import Vue from "vue"
 import App from "./App"
 import store from "@views/store"
 import router from "./router"
+import lazyload from "./plugins/lazyload"
 import './plugins/element.js'
 import "./mock/mockServer"
 import "./style/iconfont-search.css"
@@ -14,5 +15,6 @@ new Vue({
     },
     render: h => h(App),
     router,
-    store
+    store,
+    lazyload
 }).$mount("#app")

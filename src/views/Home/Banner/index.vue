@@ -4,7 +4,7 @@
     <div class="block">
       <el-carousel class="photoBox" trigger="click" height="510px">
         <el-carousel-item v-for="item in banners" :key="item.id">
-          <img :src="item.imgUrl" alt="" class="small" />
+          <img v-lazy="item.imgUrl" alt="" class="small" />
         </el-carousel-item>
       </el-carousel>
     </div>

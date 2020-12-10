@@ -1,6 +1,6 @@
 <template>
   <div class="box">
-    <Banner :bannerList="banners" />
+    <Banner class="banner" :bannerList="banners" />
     <!-- 右侧信息 -->
     <div class="right">
       <div>
@@ -148,6 +148,10 @@ export default {
   margin-left: 220px;
   font-size: 0;
   height: 500px;
+}
+/deep/ .banner img{
+  width: 730px;
+  height: 510px;
 }
 .photoBox {
   width: 730px;

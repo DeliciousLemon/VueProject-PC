@@ -18,7 +18,7 @@
         <!-- 导航栏li -->
         <ul class="header-top-right">
           <li>
-            <a href="###">我的订单</a>
+            <router-link to="/center">我的订单</router-link>
           </li>
           <li>
             <router-link to="/mycart">我的购物车</router-link>

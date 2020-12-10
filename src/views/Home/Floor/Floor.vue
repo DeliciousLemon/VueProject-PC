@@ -23,8 +23,9 @@
           </ul>
           <img src="./images/floor-1-1.png" />
         </div>
+        
         <!-- 轮播图 -->
-        <Banner :bannerList="floorBanners" />
+        <Banner class="banner" :bannerList="floorBanners" />
         <!-- 右边推荐 -->
         <div class="split">
           <div class="floor-conver-pit">
@@ -135,6 +136,10 @@ export default {
   margin: 5px 10px;
   padding-bottom: 5px;
 }
+.blockgary img{
+  width: 200px;
+  height: 240px;
+}
 .swiper-container {
   float: left;
   width: 330px;
@@ -146,6 +151,10 @@ export default {
 .split img {
   height: 177px;
   border-bottom: 1px solid #333;
+}
+/deep/ .banner img{
+  width: 330px;
+  height: 360px;
 }
 .split-center {
   float: left;

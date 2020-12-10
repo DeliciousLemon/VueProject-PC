@@ -49,6 +49,11 @@ export default {
     mutations: {
         WRITE_DETAILLIST(state, detailList) {
             state.detailList = detailList.data
+            //写入默认第一个属性
+            detailList.data.spuSaleAttrList.map(item=>{
+                const attr = item.spuSaleAttrValueList[0]
+                state.myGoods.attr[attr.saleAttrName] = attr.saleAttrValueName
+            })
         },
         //保存选择商品数据
         ADD_MY_GOODS(state, { attr, name, img, count }) {

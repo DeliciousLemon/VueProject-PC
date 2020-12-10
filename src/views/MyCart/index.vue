@@ -33,10 +33,11 @@
             <span class="price">{{ goods.skuPrice }}</span>
           </li>
           <li class="cart-list-con5">
-            <a
+            <button
               class="mins"
               @click="updataCount(goods.skuId, goods.skuNum < 2 ? 0 : -1)"
-              >-</a
+              :disabled="isDisabled"
+              >-</button
             >
             <input
               autocomplete="off"
@@ -45,7 +46,12 @@
               minnum="1"
               class="itxt"
             />
-            <a class="plus" @click="updataCount(goods.skuId, 1)">+</a>
+            <button
+              class="plus"
+              @click="updataCount(goods.skuId, 1)"
+              :disabled="isDisabled"
+              >+</button
+            >
           </li>
           <li class="cart-list-con6">
             <span class="sum">{{ goods.skuPrice * goods.skuNum }}</span>
@@ -94,6 +100,11 @@
 import { mapActions, mapState } from "vuex";
 export default {
   name: "MyCart",
+  data() {
+    return {
+      isDisabled: false,
+    };
+  },
   computed: {
     ...mapState({
       cartList: (state) => state.cart.cartList,
@@ -130,7 +141,10 @@ export default {
     ...mapActions(["getCartList", "updataCartList", "delCart", "checked"]),
     //更新数据
     async updataCount(skuID, skuNum) {
-      await this.updataCartList({ skuID, skuNum });
+      this.isDisabled = true;
+      this.updataCartList({ skuID, skuNum }).finally(() => {
+        this.isDisabled = false;
+      });
     },
     //删除
     delGoods(id) {
@@ -157,10 +171,10 @@ export default {
       });
     },
     //结算
-    submit(){
-      this.delChecked()
-      this.$router.replace("/order")
-    }
+    submit() {
+      this.delChecked();
+      this.$router.replace("/order");
+    },
   },
   mounted() {
     //判断是否登录
@@ -278,9 +292,9 @@ export default {
             border-right: 0;
             float: left;
             color: #666;
-            width: 6px;
-            text-align: center;
-            padding: 8px;
+            width: 20px;
+            height: 35px;
+            outline:none;
           }
 
           input {
@@ -297,9 +311,9 @@ export default {
             border-left: 0;
             float: left;
             color: #666;
-            width: 6px;
-            text-align: center;
-            padding: 8px;
+            width: 20px;
+            height: 35px;
+            outline:none;
           }
         }
 

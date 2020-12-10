@@ -115,7 +115,7 @@ export default {
     SmallPhotoList,
   },
   computed: {
-    ...mapGetters(["categoryView", "spuSaleAttrList", "skuInfo"]),
+    ...mapGetters(["categoryView", "spuSaleAttrList", "skuInfo","attr"]),
   },
   methods: {
     ...mapActions(["getDetail", "getAddCart"]),
@@ -155,8 +155,10 @@ export default {
       this.$router.push("/addcartsuccess");
     },
   },
-  mounted() {
-    this.getDetail(this.$route.params.id);
+  async mounted() {
+    //获取商品数据
+    await this.getDetail(this.$route.params.id);
+    this.checkedAttr = this.attr
   },
 };
 </script>

@@ -113,7 +113,7 @@ export default {
           showClose: false,
           showCancelButton: true,
           confirmButtonText: "我已支付成功",
-          cancelButtonText: "支付失败",
+          cancelButtonText: "取消支付",
           center: true,
           dangerouslyUseHTMLString: true,
         })
@@ -122,11 +122,12 @@ export default {
             type:"success",
             message:"成功"
           })
+          this.$router.replace("/center")
         })
         .catch(()=>{
           this.$message({
             type:"info",
-            message:"取消支付"
+            message:"已取消支付"
           })
         })
       })
