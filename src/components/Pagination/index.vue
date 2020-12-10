@@ -10,17 +10,16 @@
     <button :class="{ active: currentPage === 1 }" @click="skipPage(1)">
       1
     </button>
-    <span v-show="!(pageLeft <= 1)">...</span>
+    <span v-if="leftPage > 2">...</span>
     <button
       v-for="num in pageCenter"
       :key="num"
-      :class="{ active: currentPage === num + pageLeft }"
-      @click="skipPage(num + pageLeft)"
-      v-show="allPages !== 1"
+      :class="{ active: currentPage === num + leftPage - 1 }"
+      @click="skipPage(num + leftPage - 1)"
     >
-      {{ num + pageLeft }}
+      {{ num + leftPage - 1 }}
     </button>
-    <span v-show="pageRight < allPages && pageRight > 2">...</span>
+    <span v-if="rightPage > allPages-1">...</span>
     <button
       :class="{ active: currentPage === allPages }"
       @click="skipPage(allPages)"
@@ -51,6 +50,7 @@ export default {
     currentPage() {
       this.$emit("handleSizeChange", this.currentPage);
     },
+    //当前点击页
     //watch函数默认接收到新的值
     pageNo(pageNo) {
       this.currentPage = pageNo;
@@ -75,34 +75,27 @@ export default {
   computed: {
     //中间显示的页数
     pageCenter() {
-      if (this.allPages >= 7) {
-        return 5;
-      }
-      if (this.allPages <= 5) {
-        return this.allPages - 2;
-      }
-      return this.allPages;
+      //如果总页数大于或等于7，则返回5
+      //如果总页数小于7页，那么返回总页数-2（减掉默认显示的头尾）
+      //合起来直接返回总页数-2
+      return this.allPages - 2;
     },
     //总页数
     allPages() {
-      if (!this.total) return;
       return Math.ceil(this.total / this.pageSize);
     },
-    //中间显示页数左边
-    pageLeft() {
-      const count = (this.pageCenter + 1) / 2;
-      if (this.currentPage <= count) {
-        return 1;
-      }
-      if (this.currentPage >= this.allPages - count) {
-        return this.allPages - count * 2;
-      }
-      return this.currentPage - count;
+    //左边页码
+    leftPage() {
+      //判断贴近左边的情况
+      if (this.currentPage <= Math.ceil(this.pageCenter / 2) + 1) return 2;
+      //判断贴近右边的情况
+      if (this.currentPage >= this.allPages - Math.floor(this.pageCenter / 2))
+        return this.allPages - this.pageCenter;
+      return this.currentPage - Math.ceil(this.pageCenter / 2);
     },
-    //中间显示页数右边
-    pageRight() {
-      const count = (this.pageCenter + 1) / 2;
-      return this.currentPage + count;
+    //右边页码
+    rightPage() {
+      return this.leftPage + this.pageCenter-1;
     },
   },
   methods: {

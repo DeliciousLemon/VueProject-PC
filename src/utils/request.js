@@ -2,10 +2,12 @@ import axios from "axios"
 import NProgress from "nprogress"
 import { Message } from "element-ui"
 import "nprogress/nprogress.css";
-
+//根据模式（开发or生产）设置地址
+const base = process.env.NODE_ENV === "development" ? "/" : "http://182.92.128.115/"
 const instance = axios.create({
-    baseURL: "/api",
+    baseURL: `${base}api`,
 })
+//获取sessionStorage或cookie中保存的token设置到请求头中
 const sessionToken = sessionStorage.getItem("token")
 const cookieToken = document.cookie && document.cookie.split(";").filter(item=>{
     return item.includes("token")
